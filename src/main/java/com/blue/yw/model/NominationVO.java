@@ -1,4 +1,4 @@
-package com.blue.web.model;
+package com.blue.yw.model;
 
 public class NominationVO {
     private String shortName;

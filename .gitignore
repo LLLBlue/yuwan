@@ -17,6 +17,7 @@ gradle-app.setting
 bin/
 logs/
 build/
+target/
 gradle/
 ./idea*
 out/

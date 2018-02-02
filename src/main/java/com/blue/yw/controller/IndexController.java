@@ -1,10 +1,11 @@
-package com.blue.web.controller;
+package com.blue.yw.controller;
 
-import com.blue.web.model.NominationVO;
-import com.blue.web.utils.SQLUtils;
+import com.blue.yw.model.NominationVO;
+import com.blue.yw.utils.SQLUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +15,7 @@ import java.util.List;
 @RequestMapping(value = "article")
 public class IndexController {
 
-    @RequestMapping(value = "test")
+    @RequestMapping(value = "test", method = RequestMethod.GET)
     public String indexPage(Model uiModel, HttpServletRequest request) {
         String address = request.getRemoteAddr();
         System.out.println("user session: " + address);

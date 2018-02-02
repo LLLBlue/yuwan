@@ -1,6 +1,6 @@
-package com.blue.web.utils;
+package com.blue.yw.utils;
 
-import com.blue.web.model.NominationVO;
+import com.blue.yw.model.NominationVO;
 
 import java.sql.*;
 import java.util.ArrayList;

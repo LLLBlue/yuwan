@@ -1,0 +1,24 @@
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+# Package Files #
+
+# Cache of project
+.gradletasknamecache
+.classpath
+.project
+*.class
+
+# Cache dir of project
+.gradle
+.settings/
+bin/
+logs/
+build/
+gradle/
+./idea*
+out/
+.idea/
+/.metadata

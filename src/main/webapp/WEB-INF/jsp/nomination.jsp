@@ -88,9 +88,8 @@
             data: {},
             url: "../article/queryNomination",
             success: function (data) {
-                console.log(data);
                 var template = $.templates("#nominationListTemplate");
-                var htmlOutput = template.render(data);
+                var htmlOutput = template.render(data.nominationVOList);
                 $("#bottomList").append(htmlOutput);
             },
             error: function (data) {

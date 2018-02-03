@@ -51,12 +51,12 @@ public class IndexController {
 
     @RequestMapping(value = "queryNomination")
     @ResponseBody
-    public List<NominationVO> queryNomination(HttpServletRequest request) {
+    public NominationResponse queryNomination(HttpServletRequest request) {
         List<NominationVO> nominationVOList = SQLUtils.queryNomination();
 
         NominationResponse response = new NominationResponse();
         response.setNominationVOList(nominationVOList);
 
-        return nominationVOList;
+        return response;
     }
 }

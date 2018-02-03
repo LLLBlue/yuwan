@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class SQLUtils {
-    private static final String driver = "com.mysql.jdbc.Driver";
+    private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String url = "jdbc:mysql://rm-bp14f3jcp5sx75d9b3o.mysql.rds.aliyuncs.com:3306/yw";
     private static final String user = "root";
     private static final String password = "yuWan654321";

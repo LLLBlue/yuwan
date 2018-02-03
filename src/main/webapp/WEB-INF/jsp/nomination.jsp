@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>鱼丸部队简称提名</title>
-    <script src="../js/lib/jquery-1.7.2.min.js"></script>
+    <script src="../js/lib/jquery-1.9.1.min.js"></script>
     <script src="../js/lib/jsrender.min.js"></script>
     <!-- Custom Theme files -->
     <link href="../css/style.css" rel="stylesheet" type="text/css" media="all"/>

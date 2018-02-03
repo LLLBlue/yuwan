@@ -232,7 +232,7 @@ body {
     -webkit-border-radius: 0px 0px 25px 25px;
     -moz-border-radius: 0px 0px 25px 25px;
     -o-border-radius: 0px 0px 25px 25px;
-    text-align: right;
+    text-align: left;
     border-top: 2px solid #AD4337;
 }
 
@@ -242,18 +242,10 @@ body {
     color: #fff;
 }
 
-.login-bottom h3 a {
+.login-bottom h5 {
     font-size: 25px;
     font-weight: 500;
     color: #fff;
-}
-
-.login-bottom h3 a:hover {
-    color: #696969;
-    transition: 0.5s all;
-    -webkit-transition: 0.5s all;
-    -moz-transition: 0.5s all;
-    -o-transition: 0.5s all;
 }
 
 .copyright {
@@ -439,7 +431,7 @@ body {
         font-size: 11px;
     }
 
-    .login-bottom h3 a {
+    .login-bottom h5 {
         font-size: 17px;
     }
 

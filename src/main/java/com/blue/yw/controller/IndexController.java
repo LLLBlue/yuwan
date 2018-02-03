@@ -1,5 +1,7 @@
 package com.blue.yw.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.blue.yw.model.NominationResponse;
 import com.blue.yw.model.NominationVO;
 import com.blue.yw.utils.SQLUtils;
 import org.springframework.stereotype.Controller;
@@ -44,17 +46,17 @@ public class IndexController {
         nominationVO.setUserName(userName);
 
         SQLUtils.insertNomination(nominationVO);
-        return "SUCCESS";
+        return "成功";
     }
 
     @RequestMapping(value = "queryNomination")
     @ResponseBody
-    public String queryNomination(HttpServletRequest request) {
+    public List<NominationVO> queryNomination(HttpServletRequest request) {
         List<NominationVO> nominationVOList = SQLUtils.queryNomination();
-        StringBuilder res = new StringBuilder();
-        for (NominationVO vo : nominationVOList) {
-            res.append(vo.getShortName()).append(" ").append(vo.getUserName()).append("\n");
-        }
-        return res.toString();
+
+        NominationResponse response = new NominationResponse();
+        response.setNominationVOList(nominationVOList);
+
+        return nominationVOList;
     }
 }

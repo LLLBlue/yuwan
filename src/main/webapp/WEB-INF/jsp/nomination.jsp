@@ -10,6 +10,7 @@
 <head>
     <title>鱼丸部队简称提名</title>
     <script src="../js/lib/jquery-1.7.2.min.js"></script>
+    <script src="../js/lib/jsrender.min.js"></script>
     <!-- Custom Theme files -->
     <link href="../css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- Custom Theme files -->
@@ -29,8 +30,8 @@
             <input type="submit" value="提名！">
         </div>
     </div>
-    <div class="login-bottom">
-        <h3>查看提名列表  <a href="javascript:onQuery()">点我</a></h3>
+    <div class="login-bottom" id="bottomList">
+        <h5>当前提名列表：</h5>
     </div>
 </div>
 <div class="copyright">
@@ -42,6 +43,7 @@
         $("#submitButton").click(function () {
             onSubmit();
         });
+        onQuery();
     });
 
     function onSubmit() {
@@ -67,6 +69,7 @@
             url: "../article/nominateSubmit",
             success: function (data) {
                 alert(data);
+                window.location.reload();
             },
             error: function (data) {
             },
@@ -82,11 +85,13 @@
             async: false,
             cache: false,
             type: "POST",
-            data: {
-            },
+            data: {},
             url: "../article/queryNomination",
             success: function (data) {
-                alert(data);
+                console.log(data);
+                var template = $.templates("#nominationListTemplate");
+                var htmlOutput = template.render(data);
+                $("#bottomList").append(htmlOutput);
             },
             error: function (data) {
             },
@@ -96,6 +101,10 @@
             }
         });
     }
-
 </script>
+
+<script id="nominationListTemplate" type="text/x-jsrender">
+    <h3>{{:shortName}} -- {{:userName}}</h3>
+</script>
+
 </html>

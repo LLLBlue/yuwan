@@ -89,7 +89,7 @@
             url: "../article/queryNomination",
             success: function (data) {
                 var template = $.templates("#nominationListTemplate");
-                var htmlOutput = template.render(data.nominationVOList);
+                var htmlOutput = template.render(data.nominationList);
                 $("#bottomList").append(htmlOutput);
             },
             error: function (data) {

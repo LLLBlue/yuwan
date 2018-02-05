@@ -1,19 +1,24 @@
 package com.blue.yw.controller;
 
+import com.blue.yw.model.NominationListEntity;
 import com.blue.yw.model.NominationResponse;
-import com.blue.yw.model.NominationVO;
-import com.blue.yw.utils.SQLUtils;
+import com.blue.yw.repository.NominationListRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Controller
 @RequestMapping(value = "article")
-public class IndexController {
+public class NominationController {
+
+    @Autowired
+    NominationListRepository nominationListRepository;
 
     @RequestMapping(value = "nomination")
     public String nomination(Model uiModel, HttpServletRequest request) {
@@ -27,24 +32,26 @@ public class IndexController {
     public String nominateSubmit(HttpServletRequest request) {
         String shortName = request.getParameter("shortName");
         String userName = request.getParameter("userName");
-        System.out.println("shortName: " + shortName);
-        System.out.println("userName: " + userName);
+        String userIp = request.getRemoteAddr();
 
-        NominationVO nominationVO = new NominationVO();
-        nominationVO.setShortName(shortName);
-        nominationVO.setUserName(userName);
+        NominationListEntity nominationListEntity = new NominationListEntity();
+        nominationListEntity.setShortName(shortName);
+        nominationListEntity.setUserName(userName);
+        nominationListEntity.setUserIp(userIp);
+        nominationListEntity.setState("1");
+        nominationListEntity.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        nominationListRepository.save(nominationListEntity);
 
-        SQLUtils.insertNomination(nominationVO);
         return "成功";
     }
 
     @RequestMapping(value = "queryNomination")
     @ResponseBody
     public NominationResponse queryNomination(HttpServletRequest request) {
-        List<NominationVO> nominationVOList = SQLUtils.queryNomination();
+        List<NominationListEntity> nominationList = nominationListRepository.findAll();
 
         NominationResponse response = new NominationResponse();
-        response.setNominationVOList(nominationVOList);
+        response.setNominationList(nominationList);
 
         return response;
     }

@@ -3,13 +3,13 @@ package com.blue.yw.model;
 import java.util.List;
 
 public class NominationResponse {
-    private List<NominationVO> nominationVOList;
+    private List<NominationListEntity> nominationList;
 
-    public List<NominationVO> getNominationVOList() {
-        return nominationVOList;
+    public List<NominationListEntity> getNominationList() {
+        return nominationList;
     }
 
-    public void setNominationVOList(List<NominationVO> nominationVOList) {
-        this.nominationVOList = nominationVOList;
+    public void setNominationList(List<NominationListEntity> nominationList) {
+        this.nominationList = nominationList;
     }
 }

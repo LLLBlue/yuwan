@@ -3,6 +3,7 @@ package com.blue.yw.controller;
 import com.blue.yw.model.NominationListEntity;
 import com.blue.yw.model.NominationResponse;
 import com.blue.yw.repository.NominationListRepository;
+import com.blue.yw.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ public class NominationController {
 
     @Autowired
     NominationListRepository nominationListRepository;
+
+    @Autowired
+    VoteRepository voteRepository;
 
     @RequestMapping(value = "nomination")
     public String nomination(Model uiModel, HttpServletRequest request) {
@@ -40,7 +44,7 @@ public class NominationController {
         nominationListEntity.setUserIp(userIp);
         nominationListEntity.setState("1");
         nominationListEntity.setCreateDate(new Timestamp(System.currentTimeMillis()));
-        nominationListRepository.save(nominationListEntity);
+        nominationListRepository.saveAndFlush(nominationListEntity);
 
         return "成功";
     }
@@ -48,7 +52,12 @@ public class NominationController {
     @RequestMapping(value = "queryNomination")
     @ResponseBody
     public NominationResponse queryNomination(HttpServletRequest request) {
-        List<NominationListEntity> nominationList = nominationListRepository.findAll();
+        List<NominationListEntity> nominationList = nominationListRepository.findByState("1");
+
+        for (NominationListEntity entity : nominationList) {
+            Long votes = voteRepository.countByNominationId(entity.getNominationId());
+            entity.setState(String.valueOf(votes));
+        }
 
         NominationResponse response = new NominationResponse();
         response.setNominationList(nominationList);

@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="login-bottom" id="bottomList">
-        <h5>当前提名列表：</h5>
+        <h5>当前提名列表（点击投票）：</h5>
     </div>
 </div>
 <div class="copyright">
@@ -100,10 +100,38 @@
             }
         });
     }
+
+    function onNominationClick(item) {
+        if (confirm("要投票给" + $(item).html() + "？")) {
+            onVote($(item).attr("nominationId"))
+        }
+    }
+
+    function onVote(nominationId) {
+        $.ajax({
+            async: false,
+            cache: false,
+            type: "POST",
+            data: {
+                nominationId: nominationId
+            },
+            url: "../vote/voteSubmit",
+            success: function (data) {
+                alert(data);
+                window.location.reload();
+            },
+            error: function (data) {
+            },
+            beforeSend: function () {
+            },
+            complete: function () {
+            }
+        });
+    }
 </script>
 
 <script id="nominationListTemplate" type="text/x-jsrender">
-    <h3>{{:shortName}} -- {{:userName}}</h3>
+    <br>
+    <h3 onclick="onNominationClick(this)" nominationId={{:nominationId}}>{{:shortName}} -- {{:userName}} （{{:state}}票）</h3>
 </script>
-
 </html>

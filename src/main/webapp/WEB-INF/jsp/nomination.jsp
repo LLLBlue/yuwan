@@ -132,6 +132,6 @@
 
 <script id="nominationListTemplate" type="text/x-jsrender">
     <br>
-    <h3 onclick="onNominationClick(this)" nominationId={{:nominationId}}>{{:shortName}} -- {{:userName}} （{{:state}}票）</h3>
+    <h3 onclick="onNominationClick(this)" nominationId={{:nominationId}}>→ {{:shortName}} -- {{:userName}} （{{:state}}票）</h3>
 </script>
 </html>

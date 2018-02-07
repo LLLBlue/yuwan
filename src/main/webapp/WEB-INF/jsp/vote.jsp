@@ -13,7 +13,7 @@
 
 <html>
 <head>
-    <title>鱼丸部队简称提名投票</title>
+    <title>鱼丸部队简称投票</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- Scripts -->
@@ -52,7 +52,8 @@
                             <li><a href="javascript:goToUrl('/home/home')">Home</a></li>
                             <li><a href="javascript:alert('敬请期待')">注册</a></li>
                             <li><a href="javascript:alert('敬请期待')">登录</a></li>
-                            <li><a href="javascript:goToUrl('/vote/vote')">部队简称提名投票</a></li>
+                            <li><a href="javascript:goToUrl('/vote/vote')">部队简称投票</a></li>
+                            <li><a href="javascript:goToUrl('/nomination/nomination')">部队简称提名</a></li>
                         </ul>
                     </div>
                 </li>
@@ -63,8 +64,8 @@
     <!-- Main -->
     <article id="main">
         <header>
-            <h2>部队简称提名投票</h2>
-            <p>yuwan - nomination&vote</p>
+            <h2>部队简称投票</h2>
+            <p>yuwan - vote</p>
         </header>
         <section class="wrapper style5">
             <div class="inner">
@@ -120,48 +121,11 @@
     var _base = "${_base}";
 
     $(document).ready(function () {
-        // $("#submitButton").click(function () {
-        //     onSubmit();
-        // });
         onQuery();
     });
 
     function goToUrl(url) {
         window.location.href = _base + url;
-    }
-
-    function onSubmit() {
-        var shortName = $("#shortName").val();
-        var userName = $("#userName").val();
-        if (shortName === "" || shortName === null) {
-            alert("请输入部队简称");
-            return;
-        }
-        if (userName === "" || userName === null) {
-            alert("请输入你的名字");
-            return;
-        }
-
-        $.ajax({
-            async: false,
-            cache: false,
-            type: "POST",
-            data: {
-                shortName: shortName,
-                userName: userName
-            },
-            url: _base + "/article/nominateSubmit",
-            success: function (data) {
-                alert(data);
-                window.location.reload();
-            },
-            error: function (data) {
-            },
-            beforeSend: function () {
-            },
-            complete: function () {
-            }
-        });
     }
 
     function onQuery() {
@@ -170,7 +134,7 @@
             cache: false,
             type: "POST",
             data: {},
-            url: _base + "/article/queryNomination",
+            url: _base + "/nomination/queryNomination",
             success: function (data) {
                 var template = $.templates("#nominationTableTemplate");
                 var htmlOutput = template.render(data.nominationList);

@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "article")
+@RequestMapping(value = "nomination")
 public class NominationController {
 
     @Autowired

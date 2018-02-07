@@ -51,7 +51,8 @@
                             <li><a href="javascript:goToUrl('/home/home')">Home</a></li>
                             <li><a href="javascript:alert('敬请期待')">注册</a></li>
                             <li><a href="javascript:alert('敬请期待')">登录</a></li>
-                            <li><a href="javascript:goToUrl('/vote/vote')">部队简称提名投票</a></li>
+                            <li><a href="javascript:goToUrl('/vote/vote')">部队简称投票</a></li>
+                            <li><a href="javascript:goToUrl('/nomination/nomination')">部队简称提名</a></li>
                         </ul>
                     </div>
                 </li>

@@ -74,7 +74,12 @@
                 <hr/>
 
                 <h3>部队简称投票进行中</h3>
-                <p>右侧菜单进入投票</p>
+                <p>右侧菜单或<a href="javascript:goToUrl('/vote/vote')">点我</a>进入投票</p>
+                <p></p>
+                <hr/>
+
+                <h3>当前项目已开源</h3>
+                <p><a href="https://github.com/LLLBlue/yuwan">GitHub</a></p>
                 <p></p>
 
             </div>

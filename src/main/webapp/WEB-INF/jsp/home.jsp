@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Nozomi
@@ -6,6 +7,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="_base" value="${pageContext.request.contextPath}"/>
+
 <!DOCTYPE HTML>
 
 <html>
@@ -38,17 +41,17 @@
 
     <!-- Header -->
     <header id="header">
-        <h1><a href="javascript:window.location.reload()">鱼丸大爆炸</a></h1>
+        <h1><a href="javascript:goToUrl('/home/home')">鱼丸大爆炸</a></h1>
         <nav id="nav">
             <ul>
                 <li class="special">
                     <a href="#menu" class="menuToggle"><span>Menu</span></a>
                     <div id="menu">
                         <ul>
-                            <li><a href="../home/home">Home</a></li>
+                            <li><a href="javascript:goToUrl('/home/home')">Home</a></li>
                             <li><a href="javascript:alert('敬请期待')">注册</a></li>
                             <li><a href="javascript:alert('敬请期待')">登录</a></li>
-                            <li><a href="../article/nomination">部队简称投票</a></li>
+                            <li><a href="javascript:goToUrl('/vote/vote')">部队简称提名投票</a></li>
                         </ul>
                     </div>
                 </li>
@@ -93,4 +96,10 @@
     </footer>
 </div>
 </body>
+<script type="text/javascript">
+    var _base = "${_base}";
+    function goToUrl(url) {
+        window.location.href = _base + url;
+    }
+</script>
 </html>

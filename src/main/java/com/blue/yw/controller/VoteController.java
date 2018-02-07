@@ -4,6 +4,7 @@ import com.blue.yw.model.VoteEntity;
 import com.blue.yw.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,6 +18,11 @@ public class VoteController {
 
     @Autowired
     VoteRepository voteRepository;
+
+    @RequestMapping(value = "vote")
+    public String nomination(Model uiModel, HttpServletRequest request) {
+        return "vote";
+    }
 
     @RequestMapping(value = "voteSubmit")
     @ResponseBody

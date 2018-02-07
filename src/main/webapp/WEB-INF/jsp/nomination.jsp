@@ -64,7 +64,7 @@
     <!-- Main -->
     <article id="main">
         <header>
-            <h2>鱼丸太太大爆炸</h2>
+            <h2>部队简称提名</h2>
             <p>yuwan - nomination</p>
         </header>
         <section class="wrapper style5">

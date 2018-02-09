@@ -12,6 +12,8 @@ public class VoteEntity {
     private String userIp;
     private Timestamp createDate;
     private String state;
+    private String userName;
+    private Integer userId;
 
     @Id
     @Column(name = "VOTE_ID", nullable = false)
@@ -79,5 +81,25 @@ public class VoteEntity {
     public int hashCode() {
 
         return Objects.hash(voteId, nominationId, userIp, createDate, state);
+    }
+
+    @Basic
+    @Column(name = "USER_NAME", nullable = true, length = 255)
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    @Basic
+    @Column(name = "USER_ID", nullable = true)
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

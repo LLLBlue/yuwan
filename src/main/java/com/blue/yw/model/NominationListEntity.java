@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "nomination_list", schema = "yw")
+@Table(name = "nomination_list", schema = "yw", catalog = "")
 public class NominationListEntity {
     private int nominationId;
     private String shortName;
@@ -13,6 +13,8 @@ public class NominationListEntity {
     private String userIp;
     private Timestamp createDate;
     private String state;
+    private String voteCount;
+    private Integer userId;
 
     @Id
     @Column(name = "NOMINATION_ID", nullable = false)
@@ -91,5 +93,25 @@ public class NominationListEntity {
     public int hashCode() {
 
         return Objects.hash(nominationId, shortName, userName, userIp, createDate, state);
+    }
+
+    @Basic
+    @Column(name = "VOTE_COUNT", nullable = true, length = 255)
+    public String getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(String voteCount) {
+        this.voteCount = voteCount;
+    }
+
+    @Basic
+    @Column(name = "USER_ID", nullable = true)
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

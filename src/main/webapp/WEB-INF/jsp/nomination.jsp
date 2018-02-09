@@ -36,7 +36,9 @@
     <link rel="stylesheet" href="../css/ie9.css"/><![endif]-->
 </head>
 <body>
-
+<input type="hidden" name="isLogin" id="isLogin" value="${isLogin}"/>
+<input type="hidden" name="userName" id="userName" value="${userName}"/>
+<input type="hidden" name="userId" id="userId" value="${userId}"/>
 <!-- Page Wrapper -->
 <div id="page-wrapper">
 
@@ -46,12 +48,11 @@
         <nav id="nav">
             <ul>
                 <li class="special">
-                    <a href="#menu" class="menuToggle"><span>Menu</span></a>
+                    <a href="#menu" class="menuToggle"><span id="user">Menu</span></a>
                     <div id="menu">
                         <ul>
                             <li><a href="javascript:goToUrl('/home/home')">Home</a></li>
-                            <li><a href="javascript:alert('敬请期待')">注册</a></li>
-                            <li><a href="javascript:alert('敬请期待')">登录</a></li>
+                            <li><a href="javascript:loginOrLogout()" id="aLogin">登录&注册</a></li>
                             <li><a href="javascript:goToUrl('/vote/vote')">部队简称投票</a></li>
                             <li><a href="javascript:goToUrl('/nomination/nomination')">部队简称提名</a></li>
                         </ul>
@@ -71,15 +72,13 @@
             <div class="inner">
                 <section>
                     <h4>部队简称提名</h4>
+                    <h5>March</h5>
                     <form method="post" action="javascript:onSubmit()">
                         <div class="row uniform">
                             <div class="6u 12u$(xsmall)">
                                 <input type="text" name="shortName" id="shortName" value="" placeholder="部队简称"/>
                             </div>
-                            <div class="6u$ 12u$(xsmall)">
-                                <input type="text" name="userName" id="userName" value="" placeholder="你的名字"/>
-                            </div>
-                            <div class="12u$">
+                            <div class="6u 12u$(xsmall)">
                                 <ul class="actions">
                                     <li><input type="submit" value="提交" class="special"/></li>
                                 </ul>
@@ -129,8 +128,46 @@
     }
 
     $(document).ready(function () {
+        initUser();
         onQuery();
     });
+
+    function loginOrLogout() {
+        if ($("#isLogin").val() === "1") {
+            logOut();
+        } else {
+            goToUrl("/user/user");
+        }
+    }
+
+    function logOut() {
+        $.ajax({
+            async: false,
+            cache: false,
+            type: "POST",
+            data: {},
+            url: _base + "/user/logOut",
+            success: function (data) {
+                goToUrl("/home/home");
+            },
+            error: function (data) {
+            },
+            beforeSend: function () {
+            },
+            complete: function () {
+            }
+        });
+    }
+
+    function initUser() {
+        if ($("#isLogin").val() === "1") {
+            $("#user").html($("#userName").val());
+            $("#aLogin").html("退出登录");
+        } else {
+            $("#user").html("未登录");
+            $("#aLogin").html("登录&注册");
+        }
+    }
 
     function onQuery() {
         $.ajax({
@@ -156,12 +193,13 @@
     function onSubmit() {
         var shortName = $("#shortName").val();
         var userName = $("#userName").val();
-        if (shortName === "" || shortName === null) {
-            alert("请输入部队简称");
+        if (userName === "" || userName === null) {
+            alert("请先登录");
+            goToUrl("/user/user");
             return;
         }
-        if (userName === "" || userName === null) {
-            alert("请输入你的名字");
+        if (shortName === "" || shortName === null) {
+            alert("请输入部队简称");
             return;
         }
 
@@ -170,8 +208,7 @@
             cache: false,
             type: "POST",
             data: {
-                shortName: shortName,
-                userName: userName
+                shortName: shortName
             },
             url: _base + "/nomination/nominateSubmit",
             success: function (data) {

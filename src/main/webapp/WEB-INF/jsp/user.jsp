@@ -2,8 +2,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Nozomi
-  Date: 2018/2/6
-  Time: 22:49
+  Date: 2/9/2018
+  Time: 2:19 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -35,9 +35,6 @@
     <link rel="stylesheet" href="../css/ie9.css"/><![endif]-->
 </head>
 <body>
-<input type="hidden" name="isLogin" id="isLogin" value="${isLogin}"/>
-<input type="hidden" name="userName" id="userName" value="${userName}"/>
-<input type="hidden" name="userId" id="userId" value="${userId}"/>
 <!-- Page Wrapper -->
 <div id="page-wrapper">
 
@@ -47,11 +44,11 @@
         <nav id="nav">
             <ul>
                 <li class="special">
-                    <a href="#menu" class="menuToggle"><span id="user">Menu</span></a>
+                    <a href="#menu" class="menuToggle"><span>Menu</span></a>
                     <div id="menu">
                         <ul>
                             <li><a href="javascript:goToUrl('/home/home')">Home</a></li>
-                            <li><a href="javascript:loginOrLogout()" id="aLogin">登录&注册</a></li>
+                            <li><a href="javascript:goToUrl('/user/user')">登录&注册</a></li>
                             <li><a href="javascript:goToUrl('/vote/vote')">部队简称投票</a></li>
                             <li><a href="javascript:goToUrl('/nomination/nomination')">部队简称提名</a></li>
                         </ul>
@@ -64,21 +61,30 @@
     <!-- Main -->
     <article id="main">
         <header>
-            <h2>鱼丸太太大爆炸</h2>
-            <p>yuwan - stormblood</p>
+            <h2>登录&注册</h2>
+            <p>yuwan - sign in&sign up</p>
         </header>
         <section class="wrapper style5">
             <div class="inner">
-
-                <h3>恋人节活动进行中</h3>
-                <p>在森都剧场接任务哦</p>
-                <p></p>
-                <hr/>
-
-                <h3>当前项目已开源</h3>
-                <p><a href="https://github.com/LLLBlue/yuwan">GitHub</a></p>
-                <p></p>
-
+                <section>
+                    <h4>登录&注册</h4>
+                    <h5>请直接登录，如没有账号将会自动创建</h5>
+                    <form method="post" action="javascript:onSubmit()">
+                        <div class="row uniform">
+                            <div class="6u 12u$(xsmall)">
+                                <input type="text" name="userName" id="userName" value="" placeholder="用户名"/>
+                            </div>
+                            <div class="6u$ 12u$(xsmall)">
+                                <input type="password" name="password" id="password" value="" placeholder="密码"/>
+                            </div>
+                            <div class="12u$">
+                                <ul class="actions">
+                                    <li><input type="submit" value="提交" class="special"/></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                </section>
             </div>
         </section>
     </article>
@@ -101,27 +107,41 @@
 <script type="text/javascript">
     var _base = "${_base}";
 
-    $(document).ready(function () {
-        initUser();
-    });
-
-    function loginOrLogout() {
-        if ($("#isLogin").val() === "1") {
-            logOut();
-        } else {
-            goToUrl("/user/user");
-        }
+    function goToUrl(url) {
+        window.location.href = _base + url;
     }
 
-    function logOut() {
+    function onSubmit() {
+        var userName = $("#userName").val();
+        var password = $("#password").val();
+
+        if (userName === "" || userName === null) {
+            alert("请输入用户名");
+            return;
+        }
+        if (password === "" || password === null) {
+            alert("请输入密码");
+            return;
+        }
+
         $.ajax({
             async: false,
             cache: false,
             type: "POST",
-            data: {},
-            url: _base + "/user/logOut",
+            data: {
+                password: password,
+                userName: userName
+            },
+            url: _base + "/user/signUpAndSignIn",
             success: function (data) {
-                goToUrl("/home/home");
+                if (data === "00") {
+                    alert("登录成功，即将跳转到首页");
+                    window.location.href = _base + "/home/home";
+                } else if (data === "09") {
+                    alert("密码错误");
+                } else {
+                    alert("失败");
+                }
             },
             error: function (data) {
             },
@@ -130,20 +150,6 @@
             complete: function () {
             }
         });
-    }
-
-    function initUser() {
-        if ($("#isLogin").val() === "1") {
-            $("#user").html($("#userName").val());
-            $("#aLogin").html("退出登录");
-        } else {
-            $("#user").html("未登录");
-            $("#aLogin").html("登录&注册");
-        }
-    }
-
-    function goToUrl(url) {
-        window.location.href = _base + url;
     }
 </script>
 </html>

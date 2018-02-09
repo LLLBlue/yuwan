@@ -4,6 +4,7 @@ import com.blue.yw.model.NominationListEntity;
 import com.blue.yw.model.NominationResponse;
 import com.blue.yw.repository.NominationListRepository;
 import com.blue.yw.repository.VoteRepository;
+import com.blue.yw.utils.AgentUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -25,25 +27,41 @@ public class NominationController {
     VoteRepository voteRepository;
 
     @RequestMapping(value = "nomination")
-    public String nomination(Model uiModel, HttpServletRequest request) {
-        String address = request.getRemoteAddr();
-        System.out.println("user session: " + address);
+    public String nomination(Model uiModel, HttpServletRequest request, HttpSession httpSession) {
+        Object sessionName = httpSession.getAttribute("userName");
+        Object sessionId = httpSession.getAttribute("userId");
+        if (null == sessionName) {
+            uiModel.addAttribute("isLogin", "0");
+            uiModel.addAttribute("userName", "");
+            uiModel.addAttribute("userId", "");
+        } else {
+            uiModel.addAttribute("isLogin", "1");
+            uiModel.addAttribute("userName", String.valueOf(sessionName));
+            uiModel.addAttribute("userId", String.valueOf(sessionId));
+        }
         return "nomination";
     }
 
     @RequestMapping(value = "nominateSubmit")
     @ResponseBody
-    public String nominateSubmit(HttpServletRequest request) {
+    public String nominateSubmit(HttpServletRequest request, HttpSession httpSession) {
         String shortName = request.getParameter("shortName");
-        String userName = request.getParameter("userName");
-        String userIp = request.getRemoteAddr();
+        String userIp = AgentUtils.getUserIp(request);
+
+        Object sessionName = httpSession.getAttribute("userName");
+        Object sessionId = httpSession.getAttribute("userId");
+        if (null == sessionName) {
+            return "登录状态失效，请重新登录";
+        }
 
         NominationListEntity nominationListEntity = new NominationListEntity();
         nominationListEntity.setShortName(shortName);
-        nominationListEntity.setUserName(userName);
+        nominationListEntity.setUserName(String.valueOf(sessionName));
         nominationListEntity.setUserIp(userIp);
-        nominationListEntity.setState("1");
         nominationListEntity.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        nominationListEntity.setState("1");
+        nominationListEntity.setVoteCount("0");
+        nominationListEntity.setUserId(Integer.parseInt(sessionId.toString()));
         nominationListRepository.saveAndFlush(nominationListEntity);
 
         return "成功";
@@ -53,11 +71,6 @@ public class NominationController {
     @ResponseBody
     public NominationResponse queryNomination(HttpServletRequest request) {
         List<NominationListEntity> nominationList = nominationListRepository.findByState("1");
-
-        for (NominationListEntity entity : nominationList) {
-            Long votes = voteRepository.countByNominationId(entity.getNominationId());
-            entity.setState(String.valueOf(votes));
-        }
 
         NominationResponse response = new NominationResponse();
         response.setNominationList(nominationList);

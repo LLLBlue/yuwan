@@ -4,7 +4,6 @@ import com.blue.yw.constants.Constants;
 import com.blue.yw.model.UserEntity;
 import com.blue.yw.repository.UserRepository;
 import com.blue.yw.utils.AgentUtils;
-import com.blue.yw.utils.DesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,16 +33,9 @@ public class UserController {
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
 
-        try {
-            password = DesUtils.encrypt(password);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Constants.UserResultCode.ERROR;
-        }
-
         List<UserEntity> userList = userRepository.findAll();
         for (UserEntity entity : userList) {
-            if (entity.getUserName().equals(userName)) {
+            if (entity.getUserName().equalsIgnoreCase(userName)) {
                 if (entity.getUserPassword().equals(password)) {
                     entity.setLastLoginDate(new Timestamp(System.currentTimeMillis()));
                     userRepository.saveAndFlush(entity);

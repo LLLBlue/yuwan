@@ -216,7 +216,7 @@
 <tr>
     <td>{{:shortName}}</td>
     <td>{{:userName}}</td>
-    <td>{{:state}}</td>
+    <td>{{:voteCount}}</td>
     <td onclick="onNominationClick(this)" nominationId={{:nominationId}} shortName={{:shortName}}>投TA一票</td>
 </tr>
 </script>

@@ -120,7 +120,6 @@
             <version>2.3.0</version>
         </dependency>
         <!-- jdk9 support end -->
-
     </dependencies>
 
     <build>

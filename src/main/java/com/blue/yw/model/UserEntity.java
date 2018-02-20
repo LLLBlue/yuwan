@@ -15,6 +15,7 @@ public class UserEntity {
     private String createIp;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //获取自增主键注解
     @Column(name = "USER_ID", nullable = false)
     public int getUserId() {
         return userId;

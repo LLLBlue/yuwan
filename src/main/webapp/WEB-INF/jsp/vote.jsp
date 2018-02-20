@@ -217,7 +217,7 @@
     <td>{{:shortName}}</td>
     <td>{{:userName}}</td>
     <td>{{:voteCount}}</td>
-    <td onclick="onNominationClick(this)" nominationId={{:nominationId}} shortName={{:shortName}}>投TA一票</td>
+    <td onclick="onNominationClick(this)" nominationId={{:nominationId}} shortName={{:shortName}}>投票/查看</td>
 </tr>
 </script>
 </html>

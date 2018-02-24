@@ -9,4 +9,9 @@ import java.util.List;
 @Repository
 public interface NominationListRepository extends JpaRepository<NominationListEntity, Integer> {
     List<NominationListEntity> findByState(String state);
+
+    NominationListEntity findByNominationId(int nominationId);
+
+    List<NominationListEntity> findByStateOrderByVoteCountDesc(String state);
+
 }

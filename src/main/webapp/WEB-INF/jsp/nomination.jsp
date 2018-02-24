@@ -190,6 +190,10 @@
         });
     }
 
+    function notYet() {
+        alert("提名时间未到");
+    }
+
     function onSubmit() {
         var shortName = $("#shortName").val();
         var userName = $("#userName").val();

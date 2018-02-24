@@ -9,5 +9,7 @@ import java.util.List;
 @Repository
 public interface VoteRepository extends JpaRepository<VoteEntity, Integer> {
     List<VoteEntity> findByState(String state);
+
     Long countByNominationId(Integer nominationId);
+
 }

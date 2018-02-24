@@ -168,7 +168,7 @@
             cache: false,
             type: "POST",
             data: {},
-            url: _base + "/nomination/queryNomination",
+            url: _base + "/vote/queryNomination",
             success: function (data) {
                 var template = $.templates("#nominationTableTemplate");
                 var htmlOutput = template.render(data.nominationList);
@@ -183,10 +183,57 @@
         });
     }
 
+    function notYet() {
+        alert("投票时间未到");
+    }
+
     function onNominationClick(item) {
-        if (confirm("要投票给[" + $(item).attr("shortName") + "]？")) {
-            onVote($(item).attr("nominationId"))
+        var userName = $("#userName").val();
+        if (userName === "" || userName === null) {
+            alert("请先登录");
+            goToUrl("/user/user");
+            return;
         }
+
+        $.ajax({
+            async: false,
+            cache: false,
+            type: "POST",
+            data: {
+                nominationId: $(item).attr("nominationId")
+            },
+            url: _base + "/vote/queryVoteState",
+            success: function (data) {
+                if (data.voteState === "000666") {
+                    alert("登录状态失效，请重新登录");
+                    goToUrl("/user/user");
+                    return;
+                }
+                if (data.voteState === "00") {
+                    if (confirm("要投票给[" + $(item).attr("shortName") + "]？")) {
+                        onVote($(item).attr("nominationId"))
+                    }
+                    return;
+                }
+                if (data.voteState === "01") {
+                    var voteList = data.voteList;
+                    var voteNames = "投给[" + $(item).attr("shortName") + "的：\n";
+                    if (voteList.length === 0) {
+                        voteNames = "还没人投[" + $(item).attr("shortName") + "]";
+                    }
+                    for (var k = 0; k < voteList.length; k++) {
+                        voteNames += voteList[k].userName + "\n";
+                    }
+                    alert(voteNames);
+                }
+            },
+            error: function (data) {
+            },
+            beforeSend: function () {
+            },
+            complete: function () {
+            }
+        });
     }
 
     function onVote(nominationId) {
@@ -197,7 +244,7 @@
             data: {
                 nominationId: nominationId
             },
-            url: "../vote/voteSubmit",
+            url: _base + "/vote/voteSubmit",
             success: function (data) {
                 alert(data);
                 window.location.reload();
@@ -217,7 +264,7 @@
     <td>{{:shortName}}</td>
     <td>{{:userName}}</td>
     <td>{{:voteCount}}</td>
-    <td onclick="onNominationClick(this)" nominationId={{:nominationId}} shortName={{:shortName}}>投票/查看</td>
+    <td onclick="notYet(this)" nominationId={{:nominationId}} shortName={{:shortName}}>投票/查看</td>
 </tr>
 </script>
 </html>

@@ -72,7 +72,7 @@
             <div class="inner">
                 <section>
                     <h4>提名列表</h4>
-                    <h5>March</h5>
+                    <h5>March - 截止时间28日24点</h5>
                     <div class="table-wrapper">
                         <table>
                             <thead>
@@ -183,10 +183,6 @@
         });
     }
 
-    function notYet() {
-        alert("投票时间未到");
-    }
-
     function onNominationClick(item) {
         var userName = $("#userName").val();
         if (userName === "" || userName === null) {
@@ -264,7 +260,7 @@
     <td>{{:shortName}}</td>
     <td>{{:userName}}</td>
     <td>{{:voteCount}}</td>
-    <td onclick="notYet(this)" nominationId={{:nominationId}} shortName={{:shortName}}>投票/查看</td>
+    <td onclick="onNominationClick(this)" nominationId={{:nominationId}} shortName={{:shortName}}>投票/查看</td>
 </tr>
 </script>
 </html>

@@ -72,7 +72,7 @@
             <div class="inner">
                 <section>
                     <h4>部队简称提名</h4>
-                    <h5>March - 截止时间28日24点</h5>
+                    <h5>March - 提名已截止</h5>
                     <form method="post" action="javascript:onSubmit()">
                         <div class="row uniform">
                             <div class="6u 12u$(xsmall)">
@@ -188,10 +188,6 @@
             complete: function () {
             }
         });
-    }
-
-    function notYet() {
-        alert("提名时间未到");
     }
 
     function onSubmit() {

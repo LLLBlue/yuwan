@@ -45,26 +45,28 @@ public class NominationController {
     @RequestMapping(value = "nominateSubmit")
     @ResponseBody
     public String nominateSubmit(HttpServletRequest request, HttpSession httpSession) {
-        String shortName = request.getParameter("shortName");
-        String userIp = AgentUtils.getUserIp(request);
+        return "提名时间未到或已截止";
 
-        Object sessionName = httpSession.getAttribute("userName");
-        Object sessionId = httpSession.getAttribute("userId");
-        if (null == sessionName) {
-            return "登录状态失效，请重新登录";
-        }
-
-        NominationListEntity nominationListEntity = new NominationListEntity();
-        nominationListEntity.setShortName(shortName);
-        nominationListEntity.setUserName(String.valueOf(sessionName));
-        nominationListEntity.setUserIp(userIp);
-        nominationListEntity.setCreateDate(new Timestamp(System.currentTimeMillis()));
-        nominationListEntity.setState("1");
-        nominationListEntity.setVoteCount("0");
-        nominationListEntity.setUserId(Integer.parseInt(sessionId.toString()));
-        nominationListRepository.saveAndFlush(nominationListEntity);
-
-        return "成功";
+//        String shortName = request.getParameter("shortName");
+//        String userIp = AgentUtils.getUserIp(request);
+//
+//        Object sessionName = httpSession.getAttribute("userName");
+//        Object sessionId = httpSession.getAttribute("userId");
+//        if (null == sessionName) {
+//            return "登录状态失效，请重新登录";
+//        }
+//
+//        NominationListEntity nominationListEntity = new NominationListEntity();
+//        nominationListEntity.setShortName(shortName);
+//        nominationListEntity.setUserName(String.valueOf(sessionName));
+//        nominationListEntity.setUserIp(userIp);
+//        nominationListEntity.setCreateDate(new Timestamp(System.currentTimeMillis()));
+//        nominationListEntity.setState("1");
+//        nominationListEntity.setVoteCount("0");
+//        nominationListEntity.setUserId(Integer.parseInt(sessionId.toString()));
+//        nominationListRepository.saveAndFlush(nominationListEntity);
+//
+//        return "成功";
     }
 
     @RequestMapping(value = "queryNomination")

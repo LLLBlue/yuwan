@@ -17,6 +17,7 @@ public final class Constants {
     public final static class VoteResultCode {
         public static final String VOTE = "01";
         public static final String NO_VOTE = "00";
+        public static final String TIME_OUT = "02";
     }
 
 }

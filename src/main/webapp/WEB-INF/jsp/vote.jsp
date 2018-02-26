@@ -213,9 +213,9 @@
                 }
                 if (data.voteState === "01") {
                     var voteList = data.voteList;
-                    var voteNames = "投给[" + $(item).attr("shortName") + "的：\n";
+                    var voteNames = "投给[" + $(item).attr("shortName") + "]的：\n";
                     if (voteList.length === 0) {
-                        voteNames = "还没人投[" + $(item).attr("shortName") + "]";
+                        voteNames = "还没有人投[" + $(item).attr("shortName") + "]";
                     }
                     for (var k = 0; k < voteList.length; k++) {
                         voteNames += voteList[k].userName + "\n";

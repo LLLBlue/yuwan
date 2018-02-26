@@ -93,37 +93,37 @@ public class VoteController {
     @RequestMapping(value = "voteSubmit")
     @ResponseBody
     public String voteSubmit(HttpServletRequest request, HttpSession httpSession) {
-        return "投票时间未到或已截止";
+//        return "投票时间未到或已截止";
 
-//        String nominationId = request.getParameter("nominationId");
-//        String userIp = AgentUtils.getUserIp(request);
-//
-//        Object sessionName = httpSession.getAttribute("userName");
-//        Object sessionId = httpSession.getAttribute("userId");
-//        if (null == sessionName) {
-//            return "登录状态失效，请重新登录";
-//        }
-//
-//        List<VoteEntity> voteEntityList = voteRepository.findByState("1");
-//        for (VoteEntity entity : voteEntityList) {
-//            if (sessionName.equals(entity.getUserName()) || sessionId.equals(entity.getUserId())) {
-//                return "每人只可投一票";
-//            }
-//        }
-//
-//        VoteEntity voteEntity = new VoteEntity();
-//        voteEntity.setNominationId(Integer.parseInt(nominationId));
-//        voteEntity.setUserIp(userIp);
-//        voteEntity.setCreateDate(new Timestamp(System.currentTimeMillis()));
-//        voteEntity.setState("1");
-//        voteEntity.setUserName(String.valueOf(sessionName));
-//        voteEntity.setUserId(Integer.parseInt(sessionId.toString()));
-//        voteRepository.saveAndFlush(voteEntity);
-//
-//        Long voteCount = voteRepository.countByNominationId(Integer.parseInt(nominationId));
-//        NominationListEntity nominationListEntity = nominationListRepository.findByNominationId(Integer.parseInt(nominationId));
-//        nominationListEntity.setVoteCount(String.valueOf(voteCount));
-//        nominationListRepository.saveAndFlush(nominationListEntity);
-//        return "成功";
+        String nominationId = request.getParameter("nominationId");
+        String userIp = AgentUtils.getUserIp(request);
+
+        Object sessionName = httpSession.getAttribute("userName");
+        Object sessionId = httpSession.getAttribute("userId");
+        if (null == sessionName) {
+            return "登录状态失效，请重新登录";
+        }
+
+        List<VoteEntity> voteEntityList = voteRepository.findByState("1");
+        for (VoteEntity entity : voteEntityList) {
+            if (sessionName.equals(entity.getUserName()) || sessionId.equals(entity.getUserId())) {
+                return "每人只可投一票";
+            }
+        }
+
+        VoteEntity voteEntity = new VoteEntity();
+        voteEntity.setNominationId(Integer.parseInt(nominationId));
+        voteEntity.setUserIp(userIp);
+        voteEntity.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        voteEntity.setState("1");
+        voteEntity.setUserName(String.valueOf(sessionName));
+        voteEntity.setUserId(Integer.parseInt(sessionId.toString()));
+        voteRepository.saveAndFlush(voteEntity);
+
+        Long voteCount = voteRepository.countByNominationId(Integer.parseInt(nominationId));
+        NominationListEntity nominationListEntity = nominationListRepository.findByNominationId(Integer.parseInt(nominationId));
+        nominationListEntity.setVoteCount(String.valueOf(voteCount));
+        nominationListRepository.saveAndFlush(nominationListEntity);
+        return "成功";
     }
 }

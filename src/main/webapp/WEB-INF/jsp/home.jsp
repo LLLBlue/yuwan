@@ -70,8 +70,8 @@
         <section class="wrapper style5">
             <div class="inner">
 
-                <h3>恋人节活动进行中</h3>
-                <p>在森都剧场接任务哦</p>
+                <h3>三月部队简称投票进行中</h3>
+                <p>右侧菜单进入</p>
                 <p></p>
                 <hr/>
 

@@ -22,6 +22,7 @@
     <script src="../js/jquery.scrolly.min.js"></script>
     <script src="../js/skel.min.js"></script>
     <script src="../js/util.js"></script>
+    <script src="../js/lib/jsrender.min.js"></script>
 
     <script src="../js/main.js"></script>
     <!--[if lte IE 8]>
@@ -68,17 +69,7 @@
             <p>yuwan - stormblood</p>
         </header>
         <section class="wrapper style5">
-            <div class="inner">
-
-                <h3>三月部队简称投票进行中</h3>
-                <p>右侧菜单进入</p>
-                <p></p>
-                <hr/>
-
-                <h3>当前项目已开源</h3>
-                <p><a href="https://github.com/LLLBlue/yuwan">GitHub</a></p>
-                <p></p>
-
+            <div class="inner" id="noticeWrapper">
             </div>
         </section>
     </article>
@@ -103,7 +94,30 @@
 
     $(document).ready(function () {
         initUser();
+        initNotice();
     });
+
+    function initNotice() {
+        $.ajax({
+            async: false,
+            cache: false,
+            type: "POST",
+            data: {},
+            url: _base + "/home/queryNotice",
+            success: function (data) {
+                console.log(data);
+                var template = $.templates("#noticeTemplate");
+                var htmlOutput = template.render(data.sysConfigEntityList);
+                $("#noticeWrapper").append(htmlOutput);
+            },
+            error: function (data) {
+            },
+            beforeSend: function () {
+            },
+            complete: function () {
+            }
+        });
+    }
 
     function loginOrLogout() {
         if ($("#isLogin").val() === "1") {
@@ -145,5 +159,12 @@
     function goToUrl(url) {
         window.location.href = _base + url;
     }
+</script>
+<script id="noticeTemplate" type="text/x-jsrender">
+<%--noticeTemplate--%>
+<h3>{{:paramValue}}</h3>
+<p>{{:description}}</p>
+<p>{{:detail}}</p>
+<hr/>
 </script>
 </html>

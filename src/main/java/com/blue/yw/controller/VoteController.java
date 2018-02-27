@@ -1,11 +1,9 @@
 package com.blue.yw.controller;
 
 import com.blue.yw.constants.Constants;
-import com.blue.yw.model.NominationListEntity;
-import com.blue.yw.model.NominationResponse;
-import com.blue.yw.model.VoteEntity;
-import com.blue.yw.model.VoteResponse;
+import com.blue.yw.model.*;
 import com.blue.yw.repository.NominationListRepository;
+import com.blue.yw.repository.SysConfigRepository;
 import com.blue.yw.repository.VoteRepository;
 import com.blue.yw.utils.AgentUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +28,15 @@ public class VoteController {
     @Autowired
     NominationListRepository nominationListRepository;
 
+    @Autowired
+    SysConfigRepository sysConfigRepository;
+
     @RequestMapping(value = "vote")
-    public String nomination(Model uiModel, HttpServletRequest request, HttpSession httpSession) {
+    public String vote(Model uiModel, HttpServletRequest request, HttpSession httpSession) {
+        List<SysConfigEntity> sysConfigEntityList = sysConfigRepository.findByGuideKey(Constants.ConfigGuideKey.VOTE_TITLE);
+        String voteTitle = sysConfigEntityList.get(0).getParamValue();
+        uiModel.addAttribute("voteTitle", voteTitle);
+
         Object sessionName = httpSession.getAttribute("userName");
         Object sessionId = httpSession.getAttribute("userId");
         if (null == sessionName) {
@@ -93,7 +98,10 @@ public class VoteController {
     @RequestMapping(value = "voteSubmit")
     @ResponseBody
     public String voteSubmit(HttpServletRequest request, HttpSession httpSession) {
-//        return "投票时间未到或已截止";
+        List<SysConfigEntity> sysConfigEntityList = sysConfigRepository.findByGuideKey(Constants.ConfigGuideKey.VOTE_TIME);
+        if (Constants.SWITCH_OFF.equals(sysConfigEntityList.get(0).getParamValue())) {
+            return "投票时间未到或已截止";
+        }
 
         String nominationId = request.getParameter("nominationId");
         String userIp = AgentUtils.getUserIp(request);

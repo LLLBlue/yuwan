@@ -72,7 +72,7 @@
             <div class="inner">
                 <section>
                     <h4>提名列表</h4>
-                    <h5>March - 截止时间28日24点</h5>
+                    <h5>${voteTitle}</h5>
                     <div class="table-wrapper">
                         <table>
                             <thead>

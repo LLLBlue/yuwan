@@ -72,7 +72,7 @@
             <div class="inner">
                 <section>
                     <h4>部队简称提名</h4>
-                    <h5>March - 提名已截止</h5>
+                    <h5>${nominationTitle}</h5>
                     <form method="post" action="javascript:onSubmit()">
                         <div class="row uniform">
                             <div class="6u 12u$(xsmall)">

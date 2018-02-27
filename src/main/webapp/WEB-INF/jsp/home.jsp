@@ -105,7 +105,6 @@
             data: {},
             url: _base + "/home/queryNotice",
             success: function (data) {
-                console.log(data);
                 var template = $.templates("#noticeTemplate");
                 var htmlOutput = template.render(data.sysConfigEntityList);
                 $("#noticeWrapper").append(htmlOutput);

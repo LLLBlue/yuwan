@@ -75,7 +75,7 @@ public class NominationController {
         nominationListEntity.setUserIp(userIp);
         nominationListEntity.setCreateDate(new Timestamp(System.currentTimeMillis()));
         nominationListEntity.setState("1");
-        nominationListEntity.setVoteCount("0");
+        nominationListEntity.setVoteCount(0);
         nominationListEntity.setUserId(Integer.parseInt(sessionId.toString()));
         nominationListRepository.saveAndFlush(nominationListEntity);
 

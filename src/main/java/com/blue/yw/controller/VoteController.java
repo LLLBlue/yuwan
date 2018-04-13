@@ -128,9 +128,9 @@ public class VoteController {
         voteEntity.setUserId(Integer.parseInt(sessionId.toString()));
         voteRepository.saveAndFlush(voteEntity);
 
-        Long voteCount = voteRepository.countByNominationId(Integer.parseInt(nominationId));
+        Integer voteCount = voteRepository.countByNominationId(Integer.parseInt(nominationId));
         NominationListEntity nominationListEntity = nominationListRepository.findByNominationId(Integer.parseInt(nominationId));
-        nominationListEntity.setVoteCount(String.valueOf(voteCount));
+        nominationListEntity.setVoteCount(voteCount);
         nominationListRepository.saveAndFlush(nominationListEntity);
         return "成功";
     }

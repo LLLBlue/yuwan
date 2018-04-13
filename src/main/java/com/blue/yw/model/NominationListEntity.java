@@ -4,6 +4,12 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+/**
+ * NominationListEntity
+ *
+ * @author Nozomi
+ * @date 4/13/2018
+ */
 @Entity
 @Table(name = "nomination_list", schema = "yw", catalog = "")
 public class NominationListEntity {
@@ -13,7 +19,7 @@ public class NominationListEntity {
     private String userIp;
     private Timestamp createDate;
     private String state;
-    private String voteCount;
+    private Integer voteCount;
     private Integer userId;
 
     @Id
@@ -76,32 +82,13 @@ public class NominationListEntity {
         this.state = state;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NominationListEntity that = (NominationListEntity) o;
-        return nominationId == that.nominationId &&
-                Objects.equals(shortName, that.shortName) &&
-                Objects.equals(userName, that.userName) &&
-                Objects.equals(userIp, that.userIp) &&
-                Objects.equals(createDate, that.createDate) &&
-                Objects.equals(state, that.state);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(nominationId, shortName, userName, userIp, createDate, state);
-    }
-
     @Basic
-    @Column(name = "VOTE_COUNT", nullable = true, length = 255)
-    public String getVoteCount() {
+    @Column(name = "VOTE_COUNT", nullable = true)
+    public Integer getVoteCount() {
         return voteCount;
     }
 
-    public void setVoteCount(String voteCount) {
+    public void setVoteCount(Integer voteCount) {
         this.voteCount = voteCount;
     }
 
@@ -113,5 +100,26 @@ public class NominationListEntity {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NominationListEntity that = (NominationListEntity) o;
+        return nominationId == that.nominationId &&
+                Objects.equals(shortName, that.shortName) &&
+                Objects.equals(userName, that.userName) &&
+                Objects.equals(userIp, that.userIp) &&
+                Objects.equals(createDate, that.createDate) &&
+                Objects.equals(state, that.state) &&
+                Objects.equals(voteCount, that.voteCount) &&
+                Objects.equals(userId, that.userId);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(nominationId, shortName, userName, userIp, createDate, state, voteCount, userId);
     }
 }

@@ -11,4 +11,6 @@ public interface SysConfigRepository extends JpaRepository<SysConfigEntity, Inte
     List<SysConfigEntity> findByGuideKey(String guideKey);
 
     List<SysConfigEntity> findByGuideKeyOrderBySortAsc(String guideKey);
+
+    SysConfigEntity findByConfigId(Integer configId);
 }
